@@ -1,0 +1,7 @@
+package com.example.geektrust;
+
+import java.util.List;
+
+public interface ICommand {
+    void execute(List<String> commandParts);
+}

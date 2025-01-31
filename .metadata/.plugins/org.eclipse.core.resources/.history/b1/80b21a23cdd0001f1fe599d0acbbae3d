@@ -1,0 +1,54 @@
+package com.example.geektrust.entity;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public abstract class Subscription {
+    private String category;
+    private String plan;
+    private LocalDate startDate;
+    private LocalDate renewalDate;
+    private int cost;
+
+    // Encapsulation: Providing getter methods for fields
+    public String getCategory() {
+        return category;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getRenewalDate() {
+        return renewalDate;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    // Constructor
+    public Subscription(String category, String plan, LocalDate startDate, int duration) {
+        this.category = category;
+        this.plan = plan;
+        this.startDate = startDate;
+        this.renewalDate = startDate.plusMonths(duration);
+        this.cost = calculateCost(plan, duration);
+    }
+
+    // Encapsulation: Private method for calculating cost
+    private int calculateCost(String plan, int duration) {
+        int costPerMonth = getPlanCost(plan);
+        return costPerMonth * duration;
+    }
+
+    // Abstract method to get the cost per month based on the plan
+    protected abstract int getPlanCost(String plan);
+
+    public void printSubscriptionDetails() {
+        System.out.println("Subscription Category: " + category);
+        System.out.println("Plan: " + plan);
+        System.out.println("Renewal Date: " + renewalDate);
+        System.out.println("Cost: " + cost);
+    }
+}

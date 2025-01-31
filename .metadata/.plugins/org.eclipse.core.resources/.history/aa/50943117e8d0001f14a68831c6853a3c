@@ -1,0 +1,65 @@
+package com.example.geektrust;
+
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class SubscriptionServiceTest {
+    private SubscriptionService subscriptionService;
+    private User user;
+
+    @BeforeEach
+    void setUp() {
+        subscriptionService = new SubscriptionService();
+        user = new User("test_user");
+    }
+
+    @Test
+    void testSubscribeUser_ValidSubscription() {
+        subscriptionService.subscribeUser(user, PlanType.PERSONAL, Category.MUSIC);
+
+        assertTrue(user.getSubscriptions().containsKey(Category.MUSIC));
+        assertEquals("PERSONAL", user.getSubscriptions().get(Category.MUSIC).getPlanType());
+    }
+
+    @Test
+    void testSubscribeUser_AlreadySubscribed() {
+        subscriptionService.subscribeUser(user, PlanType.PERSONAL, Category.MUSIC);
+
+        Exception exception = assertThrows(SubscriptionException.class, () -> 
+            subscriptionService.subscribeUser(user, PlanType.PREMIUM, Category.MUSIC)
+        );
+
+        assertEquals("Already subscribed to this category.", exception.getMessage());
+    }
+
+    @Test
+    void testAddTopUp_ValidTopUp() {
+        subscriptionService.subscribeUser(user, PlanType.PERSONAL, Category.MUSIC);
+        subscriptionService.addTopUp(user, "FOUR_DEVICE");
+
+        assertNotNull(user.getTopUp());
+        assertEquals("FOUR_DEVICE", user.getTopUp().getType());
+        assertEquals(50, user.getTopUp().getCost());
+    }
+
+    @Test
+    void testAddTopUp_NoSubscription() {
+        Exception exception = assertThrows(SubscriptionException.class, () -> 
+            subscriptionService.addTopUp(user, "FOUR_DEVICE")
+        );
+
+        assertEquals("No subscriptions found. Add a subscription before adding a top-up.", exception.getMessage());
+    }
+
+    @Test
+    void testNotifyRenewal() {
+        subscriptionService.subscribeUser(user, PlanType.PERSONAL, Category.MUSIC);
+        subscriptionService.addTopUp(user, "FOUR_DEVICE");
+
+        // Capture the output
+        assertDoesNotThrow(() -> subscriptionService.notifyRenewal(user));
+    }
+}

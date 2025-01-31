@@ -1,0 +1,5 @@
+package com.example.rentread.controller;
+
+public class BookController {
+
+}

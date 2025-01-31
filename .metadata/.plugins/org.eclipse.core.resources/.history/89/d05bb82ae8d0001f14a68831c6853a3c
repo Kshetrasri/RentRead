@@ -1,0 +1,47 @@
+package com.example.geektrust.entity;
+
+
+import java.time.LocalDate;
+
+public class Subscription {
+
+    private String category;
+    private String plan;
+    private LocalDate startDate;
+
+    public Subscription(String category, String plan, LocalDate startDate) {
+        this.category = category;
+        this.plan = plan;
+        this.startDate = startDate;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getPlan() {
+        return plan;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getRenewalDate() {
+        // Logic for renewal date calculation
+        return startDate.plusMonths(getDurationInMonths());
+    }
+
+    private int getDurationInMonths() {
+        switch (plan) {
+            case "PERSONAL":
+                return 1;
+            case "PREMIUM":
+                return 3;
+            case "FREE":
+                return 1;
+            default:
+                return 0;
+        }
+    }
+}

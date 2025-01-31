@@ -1,0 +1,91 @@
+package com.geektrust.backend.services;
+
+
+import com.geektrust.backend.constants.Constants;
+import com.geektrust.backend.dto.SubscriptionDto;
+import com.geektrust.backend.entities.ProSubscription;
+import com.geektrust.backend.entities.Subscription;
+import com.geektrust.backend.enums.*;
+import com.geektrust.backend.exceptions.SubscriptionFailedException;
+import com.geektrust.backend.exceptions.TopUpFactoryException;
+import com.geektrust.backend.exceptions.TopUpFailedException;
+import com.geektrust.backend.exceptions.DateInvalidException;
+import com.geektrust.backend.exceptions.SubscriptionFactoryException;
+import com.geektrust.backend.utils.UsedDevice;
+import com.geektrust.backend.utils.factory.DeviceFactory;
+import com.geektrust.backend.utils.factory.SubscriptionFactoryProvider;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+public class AddSubscriptionService implements IAddSubscriptionService{
+    private final SubscriptionDto subscriptionDt;
+    private final DateTimeFormatter dateFormatter;
+    private  Subscription subscription;
+    
+    public AddSubscriptionService(SubscriptionDto subscriptionDto) {
+        this.subscriptionDt = subscriptionDto;
+        Map<Category,Subscription> map =this.subscriptionDt.getSubscriptions();
+        this.dateFormatter=DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
+    }
+    
+   
+    private boolean isAValidStringDate(String dateStr){
+        try {
+            LocalDate.parse(dateStr, dateFormatter);
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+        return true;
+    }
+    
+    @Override
+    public void startSubscription(String dateStr) throws DateInvalidException {
+        if(!isAValidStringDate(dateStr)) throw new DateInvalidException("INVALID_DATE");
+        LocalDate startingDate=LocalDate.parse(dateStr,dateFormatter);
+        subscriptionDt.setSubscriptionStartDate(startingDate);
+        subscription.setDateOfSubscription(startingDate);
+    }
+
+    @Override
+    public void addSubscription(Category subscriptionCategory, Plan subscriptionPlan)throws SubscriptionFailedException{
+      Boolean value = this.subscriptionDt.getSubscriptions().containsKey(subscriptionCategory)? true:false;
+          String result = value ? value.toString(): this.subscriptionDt.getSubscriptionStatus().toString();
+       SubscriptionFactoryException.getSubscriptionException(result);
+       
+//        Subscription subscription= SubscriptionFactoryProvider.getSubscription(subscriptionCategory,subscriptionPlan);
+       
+       ProSubscription proSubscription = new ProSubscription(subscriptionCategory, subscriptionPlan) ;
+       //pro subscription list
+       List<ProSubscription> ProSubscriptions = Arrays.asList(proSubscription);
+       subscription.setProSubcription(ProSubscriptions);
+        subscriptionDt.addSubscription(subscriptionCategory,subscription);
+    }
+                
+
+  
+
+
+	@Override
+    public void addTopUpPlan(String inputDevice, Integer day) throws TopUpFailedException {
+               TopUpFactoryException.getTopUpException(this.subscriptionDt.getSubscriptionStatus());
+               DeviceCategory device = DeviceCategory.valueOf(inputDevice);
+                subscriptionDt.setSubscribedDevice(device);
+                subscriptionDt.setTopUpMonths(day);
+            }
+        
+    
+    public Integer getPlanValue() {
+        Map<Category,Subscription> map =this.subscriptionDt.getSubscriptions();
+       List<Subscription> subscription= map.values();
+        Integer totalCost = 0;
+        for (ActivePlan activePlan : activePlanList) {
+            totalCost += activePlan.getValueForPlan();
+        }
+        totalCost += subscription.getTopUpType() != null ? subscription.getTopUpCost() * subscription.getTopUpValidity() : 0;
+        return totalCost;
+    }
+    }

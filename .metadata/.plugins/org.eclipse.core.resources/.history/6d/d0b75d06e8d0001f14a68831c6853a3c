@@ -1,0 +1,21 @@
+//package com.example.geektrust.entity;
+//
+//import java.time.LocalDate;
+//
+//public class MusicSubscription extends Subscription {
+//
+//    public MusicSubscription(String category, String plan, LocalDate startDate, int duration) {
+//        super(category, plan, startDate, duration);
+//    }
+//
+//    
+//    @Override
+//    protected int getPlanCost(String plan) {
+//        switch (plan.toUpperCase()) {
+//            case "PERSONAL": return 100;
+//            case "PREMIUM": return 200;
+//            case "FREE": return 0;
+//            default: return 0;
+//        }
+//    }
+//}

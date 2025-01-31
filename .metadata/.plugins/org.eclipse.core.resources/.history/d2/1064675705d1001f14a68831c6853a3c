@@ -1,0 +1,13 @@
+package com.geektrust.backend.entities;
+
+import java.util.List;
+
+import com.geektrust.backend.enums.Category;
+import com.geektrust.backend.enums.Plan;
+
+public class ProSubscription {
+
+	  private Category category;
+	  
+	    private Plan plan;
+}

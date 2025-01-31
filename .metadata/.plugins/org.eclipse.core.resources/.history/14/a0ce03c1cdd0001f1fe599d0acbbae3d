@@ -1,0 +1,5 @@
+package com.example.geektrust.bean;
+
+public class TopUpService {
+
+}

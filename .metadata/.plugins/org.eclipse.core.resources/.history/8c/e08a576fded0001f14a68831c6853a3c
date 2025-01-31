@@ -1,0 +1,11 @@
+package com.example.geektrust.exception;
+
+public class public class SubscriptionException extends RuntimeException {
+    public SubscriptionException(String message) {
+        super(message);
+    }
+} extends RuntimeException {
+    public SubscriptionException(String message) {
+        super(message);
+    }
+}

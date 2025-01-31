@@ -1,0 +1,18 @@
+package com.example.learning_navigator.entity;
+
+@Entity
+public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long registrationId;
+    private String name;
+
+    @ManyToMany(mappedBy = "students")
+    private List<Subject> subjects;
+
+    @ManyToMany
+    private List<Exam> exams;
+
+    // Getters and Setters
+}
+

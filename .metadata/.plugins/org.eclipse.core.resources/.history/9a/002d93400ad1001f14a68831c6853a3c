@@ -1,0 +1,61 @@
+package com.geektrust.backend.constants;
+
+// all the constanst to overall projects
+public class Constants {
+ 
+    public static final int MUSIC_FREE_PLAN_PRICE = 0;
+    public static final int MUSIC_PERSONAL_PLAN_PRICE = 100;
+    public static final int MUSIC_PREMIUM_PLAN_PRICE = 250;
+    public static final int VIDEO_FREE_PLAN_PRICE = 0;
+    public static final int VIDEO_PERSONAL_PLAN_PRICE = 200;
+    public static final int VIDEO_PREMIUM_PLAN_PRICE = 500;
+    public static final int PODCAST_FREE_PLAN_PRICE = 0;
+    public static final int PODCAST_PERSONAL_PLAN_PRICE = 100;
+    public static final int PODCAST_PREMIUM_PLAN_PRICE = 300;
+
+    // Subscription Plan Validities (in months)
+    public static final int MUSIC_FREE_PLAN_VALIDITY = 1;
+    public static final int MUSIC_PERSONAL_PLAN_VALIDITY = 1;
+    public static final int MUSIC_PREMIUM_PLAN_VALIDITY = 3;
+    public static final int VIDEO_FREE_PLAN_VALIDITY = 1;
+    public static final int VIDEO_PERSONAL_PLAN_VALIDITY = 1;
+    public static final int VIDEO_PREMIUM_PLAN_VALIDITY = 3;
+    public static final int PODCAST_FREE_PLAN_VALIDITY = 1;
+    public static final int PODCAST_PERSONAL_PLAN_VALIDITY = 1;
+    public static final int PODCAST_PREMIUM_PLAN_VALIDITY = 3;
+
+    // Top-Up Plans
+    public static final int FOUR_DEVICE_TOP_UP_PLAN_PRICE = 50;
+    public static final int TEN_DEVICE_TOP_UP_PLAN_PRICE = 100;
+    public static final int FOUR_DEVICE_COUNT = 4;
+    public static final int TEN_DEVICE_COUNT = 10;
+
+    // Date Formats
+    public static final String DATE_FORMAT = "dd-MM-yyyy";
+    public static final String DATE_PATTERN = "dd-MM-yyyy";
+    public static final String INSERT_DATE_PATTERN = "yyyy-MM-dd";
+
+    // Notification Constants
+    public static final int DAYS_BEFORE_NOTIFICATION = 10;
+
+    // Token Indexes
+    public static final int TOKEN_ZERO = 0;
+    public static final int TOKEN_ONE = 1;
+    public static final int TOKEN_TWO = 2;
+    public static final int TOKEN_THREE = 3;
+
+    // General Constants
+    public static final int ZERO = 0;
+    public static final int ONE = 1;
+    public static final int TWO = 2;
+    public static final int THREE = 3;
+
+    // Additional Constants
+    public static final int BEFORE_NOTIFICATION_DAYS = 10;
+    public static final int ZERO_DEVICE = 0;
+
+    private Constants() {
+        // Private constructor to prevent instantiation
+    }
+
+}

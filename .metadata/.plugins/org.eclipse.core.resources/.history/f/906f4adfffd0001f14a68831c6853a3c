@@ -1,0 +1,48 @@
+package com.geektrust.backend.commands;
+
+import com.geektrust.backend.constants.Constants;
+import com.geektrust.backend.enums.DeviceCategory;
+import com.geektrust.backend.exceptions.TopUpFailedException;
+import com.geektrust.backend.services.IAddSubscriptionService;
+
+import java.util.List;
+
+public class AddTopUpCommand implements ICommand{
+
+    private final IAddSubscriptionService addSubscriptionService;
+
+    public AddTopUpCommand(IAddSubscriptionService addSubscriptionService) {
+        this.addSubscriptionService = addSubscriptionService;
+    }
+
+    @Override
+    public void execute(List<String> tokens) {
+        if (tokens == null || tokens.size() < 3) {
+            System.out.println("Invalid command arguments.");
+            return;
+        }
+
+        try {
+            String  deviceType = tokens.get(Constants.ONE);
+            int noOfMonths = parseNumberOfMonths(tokens.get(Constants.TWO));
+
+            addSubscriptionService.addTopUpPlan(deviceType, noOfMonths);
+        } catch (TopUpFailedException e) {
+            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+  
+
+    private int parseNumberOfMonths(String monthsStr) {
+        try {
+            return Integer.parseInt(monthsStr);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid number of months: " + monthsStr, e);
+        }
+    }
+}

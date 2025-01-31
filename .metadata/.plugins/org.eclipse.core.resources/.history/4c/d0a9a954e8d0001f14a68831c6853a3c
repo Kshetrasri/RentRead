@@ -1,0 +1,28 @@
+package com.example.geektrust;
+
+
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+
+public class CommandInvoker {
+    private Map<String, Command> commandMap;
+
+    public CommandInvoker() {
+        commandMap = new HashMap<>();
+    }
+
+    public void addCommand(String commandName, Command command) {
+        commandMap.put(commandName, command);
+    }
+
+    public void executeCommand(String commandName, List<String> commandParts) {
+        Command command = commandMap.get(commandName);
+        if (command != null) {
+            command.execute(commandParts);
+        } else {
+            System.out.println("Unknown command: " + commandName);
+        }
+    }
+}

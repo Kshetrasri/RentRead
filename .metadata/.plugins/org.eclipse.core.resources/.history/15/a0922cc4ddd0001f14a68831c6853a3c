@@ -1,0 +1,15 @@
+package com.example.geektrust;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class CommandInvoker {
+    private final SubscriptionService subscriptionService;
+    private final Map<String, User> users;
+
+    public CommandInvoker() {
+        this.subscriptionService = new SubscriptionService();
+        this.users = new HashMap<>();
+    }

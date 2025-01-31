@@ -1,0 +1,32 @@
+package com.example.geektrust.entity;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class User {
+    private final String userId;
+    private final Map<Category, Subscription> subscriptions;
+    private TopUp topUp;
+
+    public User(String userId) {
+        this.userId = userId;
+        this.subscriptions = new HashMap<>();
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public Map<Category, Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public TopUp getTopUp() {
+        return topUp;
+    }
+
+    public void setTopUp(TopUp topUp) {
+        this.topUp = topUp;
+    }
+}
+

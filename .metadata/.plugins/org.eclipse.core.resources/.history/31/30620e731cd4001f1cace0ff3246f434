@@ -1,0 +1,5 @@
+package com.example.learning_navigator.entity;
+
+public class Student {
+
+}

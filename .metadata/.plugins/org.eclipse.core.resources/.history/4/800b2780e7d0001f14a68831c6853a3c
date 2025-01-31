@@ -1,0 +1,36 @@
+package com.example.geektrust;
+
+
+
+
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import com.doremi.service.SubscriptionService;
+
+public class SubscriptionCommand implements Command {
+
+    private SubscriptionService subscriptionService;
+
+    public AddSubscriptionCommand(SubscriptionService subscriptionService) {
+        this.subscriptionService = subscriptionService;
+    }
+
+    @Override
+    public void execute(List<String> commandParts) {
+        try {
+            String userId = commandParts.get(1); 
+            String category = commandParts.get(2);
+            String plan = commandParts.get(3);
+            LocalDate startDate = LocalDate.parse(commandParts.get(4), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            
+            Subscription subscription = new Subscription(category, plan, startDate);
+            subscriptionService.addSubscription(userId, subscription);
+            System.out.println("Subscription added successfully for user: " + userId);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}

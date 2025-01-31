@@ -1,0 +1,68 @@
+package com.example.rentread.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.rentread.entity.Rent;
+import com.example.rentread.repository.BookRepository;
+import com.example.rentread.repository.RentRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Service
+public class RentService {
+	
+	@Autowired
+	RentRepository rentRepository;
+	
+	
+
+
+	@Autowired
+	 BookRepository bookRepository;
+
+	   
+
+	    public Rent rentBook(Long userId, Long bookId) {
+	        long activeRentals = rentRepository.countByUserIdAndReturnDateIsNull(userId);
+	        if (activeRentals >= 2) {
+	            throw new RuntimeException("Cannot rent more than 2 books at a time");
+	        }
+
+	        Book book = bookRepository.findById(bookId)
+	                .orElseThrow(() -> new RuntimeException("Book not found"));
+	        if (!book.isAvailabilityStatus()) {
+	            throw new RuntimeException("Book is not available for rent");
+	        }
+
+	        book.setAvailabilityStatus(false);
+	        bookRepository.save(book);
+
+	        Rental rental = Rental.builder()
+	                .user(new User(userId))
+	                .book(book)
+	                .rentalDate(LocalDate.now())
+	                .build();
+
+	        return rentalRepository.save(rental);
+	    }
+
+	    public Rental returnBook(Long rentalId) {
+	        Rental rental = rentalRepository.findById(rentalId)
+	                .orElseThrow(() -> new RuntimeException("Rental not found"));
+	        if (rental.getReturnDate() != null) {
+	            throw new RuntimeException("Book already returned");
+	        }
+
+	        rental.setReturnDate(LocalDate.now());
+	        rental.getBook().setAvailabilityStatus(true);
+	        bookRepository.save(rental.getBook());
+
+	        return rentalRepository.save(rental);
+	    }
+	}
+
+
+}

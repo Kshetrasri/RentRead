@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <booleanAttribute key="org.eclipse.debug.core.ATTR_FORCE_SYSTEM_CONSOLE_ENCODING" value="false"/>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/demo/src/main/java/com/example/geektrust/Main.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.example.geektrust.Main"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="java-maven-starter-kit"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="demo"/>
+    <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="START_SUBSCRIPTION 20-10-2022&#13;&#10;ADD_SUBSCRIPTION MUSIC PERSONAL&#13;&#10;ADD_SUBSCRIPTION MUSIC PREMIUM&#13;&#10;ADD_TOPUP TEN_DEVICE 1&#13;&#10;ADD_TOPUP TEN_DEVICE 1&#13;&#10;PRINT_RENEWAL_DETAILS"/>
+</launchConfiguration>

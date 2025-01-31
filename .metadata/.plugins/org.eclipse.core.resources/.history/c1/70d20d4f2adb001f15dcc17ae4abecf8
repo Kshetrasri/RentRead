@@ -1,0 +1,5 @@
+package com.example.rentread.repository;
+
+public interface BookRepository {
+
+}

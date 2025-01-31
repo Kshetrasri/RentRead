@@ -1,0 +1,75 @@
+package com.geektrust.backend.entities;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import com.geektrust.backend.enums.Category;
+import com.geektrust.backend.enums.DeviceCategory;
+import com.geektrust.backend.enums.Plan;
+
+public  class Subscription {
+
+	   private LocalDate dateOfSubscription;
+	   
+	    private DeviceCategory topUpType;
+	  
+	    private Integer topUpValidity;
+	    
+	  
+	    private List<Category> category;
+	  
+	    private List<Plan> plan;
+
+	    private int price;
+	    
+		public LocalDate getDateOfSubscription() {
+			return dateOfSubscription;
+		}
+
+		public void setDateOfSubscription(LocalDate dateOfSubscription) {
+			this.dateOfSubscription = dateOfSubscription;
+		}
+
+		public DeviceCategory getTopUpType() {
+			return topUpType;
+		}
+
+		public void setTopUpType(DeviceCategory topUpType) {
+			this.topUpType = topUpType;
+		}
+
+		public Integer getTopUpValidity() {
+			return topUpValidity;
+		}
+
+		public void setTopUpValidity(Integer topUpValidity) {
+			this.topUpValidity = topUpValidity;
+		}
+
+		public List<Category> getCategory() {
+			return category;
+		}
+
+		public void setCategory(List<Category> category) {
+			this.category = category;
+		}
+
+		public List<Plan> getPlan() {
+			return plan;
+		}
+
+		public void setPlan(List<Plan> plan) {
+			this.plan = plan;
+		}
+
+		@Override
+		public String toString() {
+			return "Subscription [dateOfSubscription=" + dateOfSubscription + ", topUpType=" + topUpType
+					+ ", topUpValidity=" + topUpValidity + ", category=" + category + ", plan=" + plan + "]";
+		}
+
+		public int getPrice() {
+			return price;
+		}    
+
+}

@@ -1,0 +1,36 @@
+package com.doremi.command;
+
+import com.doremi.entity.User;
+import com.doremi.service.SubscriptionService;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class CommandInvoker {
+    private final Map<String, Command> commands;
+
+    public CommandInvoker() {
+        Map<String, User> users = new HashMap<>();
+        SubscriptionService subscriptionService = new SubscriptionService();
+
+        this.commands = new HashMap<>();
+        this.commands.put("SUBSCRIBE", new SubscribeCommand(users, subscriptionService));
+        this.commands.put("ADD_TOPUP", new AddTopUpCommand(users, subscriptionService));
+        this.commands.put("RENEW", new RenewCommand(users, subscriptionService));
+    }
+
+    public void executeCommand(String action, List<String> commandParts) {
+        Command command = commands.get(action.toUpperCase());
+        if (command == null) {
+            System.out.println("Unknown command: " + action);
+            return;
+        }
+
+        try {
+            command.execute(commandParts);
+        } catch (Exception e) {
+            System.err.println("Error processing command: " + e.getMessage());
+        }
+    }
+}

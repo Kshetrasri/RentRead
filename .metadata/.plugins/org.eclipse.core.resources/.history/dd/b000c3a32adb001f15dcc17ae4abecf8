@@ -1,0 +1,5 @@
+package com.example.rentread.service;
+
+public class UserService {
+
+}

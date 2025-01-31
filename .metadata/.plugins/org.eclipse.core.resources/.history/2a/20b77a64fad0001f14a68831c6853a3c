@@ -1,0 +1,21 @@
+package com.geektrust.backend.exceptions;
+
+import com.geektrust.backend.enums.DeviceCategory;
+import com.geektrust.backend.enums.Status;
+import com.geektrust.backend.enums.TopUpStatus;
+import com.geektrust.backend.utils.UsedDevice;
+import com.geektrust.backend.utils.devices.FourDevice;
+import com.geektrust.backend.utils.devices.TenDevice;
+
+public class TopUpFactoryException {
+	
+	 public static void TopUpFactoryException(String  stauts) {
+	        switch (stauts) {
+	            case "NOT_STARTED":throw new TopUpFailedException("ADD_TOPUP_FAILED INVALID_DATE");
+	            case "STARTED": throw new TopUpFailedException("ADD_TOPUP_FAILED SUBSCRIPTIONS_NOT_FOUND");
+	            case "ADDED" : throw new TopUpFailedException("ADD_TOPUP_FAILED DUPLICATE_TOPUP");
+	            
+	        }
+	    }
+
+}

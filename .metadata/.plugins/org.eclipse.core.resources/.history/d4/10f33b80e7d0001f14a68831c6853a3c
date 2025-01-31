@@ -1,0 +1,16 @@
+
+
+public class StartSubscriptionCommand implements Command {
+    private SubscriptionService subscriptionService;
+    private String startDate;
+
+    public StartSubscriptionCommand(SubscriptionService subscriptionService, String startDate) {
+        this.subscriptionService = subscriptionService;
+        this.startDate = startDate;
+    }
+
+    @Override
+    public void execute() {
+        subscriptionService.startSubscription(startDate);
+    }
+}

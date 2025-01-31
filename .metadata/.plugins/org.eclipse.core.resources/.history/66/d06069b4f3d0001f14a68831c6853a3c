@@ -1,0 +1,22 @@
+package com.geektrust.backend.dto;
+
+public class AmountRenewalDto {
+    
+    private final int renewalAmount;
+
+    // Constructor
+    public AmountRenewalDto(int renewalAmount) {
+        this.renewalAmount = renewalAmount;
+    }
+
+    // Getter (Optional, in case you need the amount elsewhere)
+    public int getRenewalAmount() {
+        return renewalAmount;
+    }
+
+    // toString Method Override
+    @Override
+    public String toString() {
+        return "RENEWAL_AMOUNT " + renewalAmount;
+    }
+}

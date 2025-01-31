@@ -1,0 +1,18 @@
+package com.geektrust.backend.utils.factory;
+
+
+import com.geektrust.backend.enums.DeviceCategory;
+import com.geektrust.backend.utils.UsedDevice;
+import com.geektrust.backend.utils.devices.FourDevice;
+import com.geektrust.backend.utils.devices.TenDevice;
+
+
+public class DeviceFactory {
+    public static UsedDevice createDevice(DeviceCategory deviceCategory) {
+        switch (deviceCategory) {
+            case FOUR_DEVICE: return new FourDevice();
+            case TEN_DEVICE: return new TenDevice();
+            default: return null;
+        }
+    }
+}

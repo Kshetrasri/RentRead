@@ -1,0 +1,42 @@
+package com.geektrust.backend.entities;
+
+
+public abstract class Subscription {
+
+    protected Integer validityInMonths;
+    protected Integer price;
+    
+    private LocalDate dateOfSubscription;
+    @Getter
+    private List<ActivePlan> activePlans;
+    @Setter
+    @Getter
+    private TopUpType topUpType;
+    @Setter
+    @Getter
+    private Integer topUpValidity;
+
+    // Constructor
+    // protected Subscription(Integer validityInMonths, Integer price) {
+    //     if (validityInMonths == null || validityInMonths <= 0) {
+    //         throw new IllegalArgumentException("Validity in months must be a positive integer.");
+    //     }
+    //     if (price == null || price < 0) {
+    //         throw new IllegalArgumentException("Price must be a non-negative integer.");
+    //     }
+    //     this.validityInMonths = validityInMonths;
+    //     this.price = price;
+    // }
+
+    // Getter for validity in months
+    public Integer getValidityInMonths() {
+        return validityInMonths;
+    }
+
+    // Getter for price
+    public Integer getPrice() {
+        return price;
+    }
+
+
+}

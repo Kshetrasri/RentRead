@@ -1,0 +1,68 @@
+package com.geektrust.backend.services;
+
+
+import com.geektrust.backend.constants.Constants;
+import com.geektrust.backend.dto.SubscriptionDto;
+import com.geektrust.backend.entities.Subscription;
+import com.geektrust.backend.enums.*;
+import com.geektrust.backend.exceptions.SubscriptionFailedException;
+import com.geektrust.backend.exceptions.TopUpFactoryException;
+import com.geektrust.backend.exceptions.TopUpFailedException;
+import com.geektrust.backend.exceptions.DateInvalidException;
+
+import com.geektrust.backend.utils.UsedDevice;
+import com.geektrust.backend.utils.factory.DeviceFactory;
+import com.geektrust.backend.utils.factory.SubscriptionFactoryProvider;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+public class AddSubscriptionService implements IAddSubscriptionService{
+    private final SubscriptionDto doReMiSubscription;
+    private final DateTimeFormatter dateFormatter;
+    
+    private Subscription subscription;
+
+    public AddSubscriptionService(DoReMiSubscription doremiSubscription) {
+        this.doReMiSubscription = doremiSubscription;
+        this.dateFormatter=DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
+    }
+    
+    public void createSubscription(LocalDate date) {
+        this.subscription.setDateOfSubscription(date);
+    }
+
+    private boolean isAValidStringDate(String dateStr){
+        try {
+            LocalDate.parse(dateStr, dateFormatter);
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+        return true;
+    }
+    
+    @Override
+    public void startSubscription(String dateStr) throws DateInvalidException {
+        if(!isAValidStringDate(dateStr)) throw new DateInvalidException("INVALID_DATE");
+        LocalDate startingDate=LocalDate.parse(dateStr,dateFormatter);
+        doReMiSubscription.setSubscriptionStartDate(startingDate);
+    }
+
+    @Override
+    public void addSubscription(Category subscriptionCategory, Plan subscriptionPlan)throws SubscriptionFailedException{
+        if(doReMiSubscription.getSubscriptionStatus().equals(Status.NOT_STARTED)) throw new SubscriptionFailedException("ADD_SUBSCRIPTION_FAILED INVALID_DATE");
+        if(doReMiSubscription.isSubscriptionCategoryExists(subscriptionCategory)) throw new SubscriptionFailedException("ADD_SUBSCRIPTION_FAILED DUPLICATE_CATEGORY");
+        Subscription subscription= SubscriptionFactoryProvider.getSubscription(subscriptionCategory,subscriptionPlan);
+        doReMiSubscription.addSubscription(subscriptionCategory,subscription);
+    }
+
+    
+                
+
+    @Override
+    public void addTopUpPlan(Integer deviceType, Integer day) throws TopUpFailedException {
+               TopUpFactoryException.getTopUpException(this.doReMiSubscription.getSubscriptionStatus());
+                doReMiSubscription.addTopUp(deviceType,day);
+            }
+        
+    }

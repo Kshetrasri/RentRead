@@ -1,0 +1,321 @@
+package com.example.geektrust; 
+
+public class Main {
+    public static void main(String[] args) {
+        /*
+        Sample code to read from file passed as command line argument
+        try {
+            // the file to be opened for reading
+            FileInputStream fis = new FileInputStream(args[0]);
+            Scanner sc = new Scanner(fis); // file to be scanned
+            // returns true if there is another line to read
+            while (sc.hasNextLine()) {
+               //Add your code here to process input commands
+            }
+            sc.close(); // closes the scanner
+        } catch (IOException e) {
+        }
+        */
+    }
+}
+
+
+
+
+//package com.doremi;
+//
+//import com.doremi.setup.ApplicationSetup;
+//import com.doremi.command.CommandInvoker;
+//import java.io.FileInputStream;
+//import java.io.IOException;
+//import java.util.Arrays;
+//import java.util.List;
+//import java.util.Scanner;
+//
+//public class Application {
+//    public static void main(String[] args) {
+//        // args = new String[1];
+//        // args[0] = "sample_input/input1.txt";
+//        ApplicationSetup applicationSetup = ApplicationSetup.getInstanceOfApplicationSetup();
+//        CommandInvoker commandInvoker = applicationSetup.getCommandInvoker();
+//        try {
+//            // The file to be opened for reading
+//            FileInputStream fis = new FileInputStream(args[0]);
+//            Scanner sc = new Scanner(fis); // file to be scanned
+//            
+//            // Process each line as a command
+//            while (sc.hasNextLine()) {
+//                String command = sc.nextLine();
+//                List<String> commandParts = Arrays.asList(command.split(" "));
+//                commandInvoker.executeCommand(commandParts.get(0), commandParts);
+//            }
+//
+//            sc.close(); // closes the scanner
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//}
+//
+//// Command Package
+//package com.doremi.command;
+//
+//import com.doremi.service.SubscriptionService;
+//import com.doremi.entity.User;
+//import com.doremi.enums.Category;
+//import com.doremi.enums.PlanType;
+//import com.doremi.exception.SubscriptionException;
+//
+//import java.util.ArrayList;
+//import java.util.HashMap;
+//import java.util.List;
+//import java.util.Map;
+//
+//public class CommandInvoker {
+//    private final SubscriptionService subscriptionService;
+//    private final Map<String, User> users;
+//
+//    public CommandInvoker() {
+//        this.subscriptionService = new SubscriptionService();
+//        this.users = new HashMap<>();
+//    }
+//
+//    public void executeCommand(String action, List<String> commandParts) {
+//        try {
+//            switch (action.toUpperCase()) {
+//                case "SUBSCRIBE":
+//                    handleSubscribe(commandParts);
+//                    break;
+//                case "ADD_TOPUP":
+//                    handleAddTopUp(commandParts);
+//                    break;
+//                case "RENEW":
+//                    handleRenew(commandParts);
+//                    break;
+//                default:
+//                    System.out.println("Unknown command: " + action);
+//            }
+//        } catch (Exception e) {
+//            System.err.println("Error processing command: " + e.getMessage());
+//        }
+//    }
+//
+//    private void handleSubscribe(List<String> commandParts) {
+//        if (commandParts.size() < 4) {
+//            throw new IllegalArgumentException("Invalid SUBSCRIBE command format.");
+//        }
+//
+//        String userId = commandParts.get(1);
+//        Category category = Category.valueOf(commandParts.get(2).toUpperCase());
+//        PlanType planType = PlanType.valueOf(commandParts.get(3).toUpperCase());
+//
+//        User user = users.computeIfAbsent(userId, id -> new User(id));
+//        subscriptionService.subscribeUser(user, planType, category);
+//    }
+//
+//    private void handleAddTopUp(List<String> commandParts) {
+//        if (commandParts.size() < 3) {
+//            throw new IllegalArgumentException("Invalid ADD_TOPUP command format.");
+//        }
+//
+//        String userId = commandParts.get(1);
+//        String topUpType = commandParts.get(2);
+//
+//        User user = users.get(userId);
+//        if (user == null) {
+//            throw new SubscriptionException("User does not exist.");
+//        }
+//
+//        subscriptionService.addTopUp(user, topUpType);
+//    }
+//
+//    private void handleRenew(List<String> commandParts) {
+//        if (commandParts.size() < 2) {
+//            throw new IllegalArgumentException("Invalid RENEW command format.");
+//        }
+//
+//        String userId = commandParts.get(1);
+//
+//        User user = users.get(userId);
+//        if (user == null) {
+//            throw new SubscriptionException("User does not exist.");
+//        }
+//
+//        subscriptionService.notifyRenewal(user);
+//    }
+//}
+//
+//// Application Setup Package
+//package com.doremi.setup;
+//
+//import com.doremi.command.CommandInvoker;
+//
+//public class ApplicationSetup {
+//    private static ApplicationSetup instance;
+//    private final CommandInvoker commandInvoker;
+//
+//    private ApplicationSetup() {
+//        this.commandInvoker = new CommandInvoker();
+//    }
+//
+//    public static ApplicationSetup getInstanceOfApplicationSetup() {
+//        if (instance == null) {
+//            synchronized (ApplicationSetup.class) {
+//                if (instance == null) {
+//                    instance = new ApplicationSetup();
+//                }
+//            }
+//        }
+//        return instance;
+//    }
+//
+//    public CommandInvoker getCommandInvoker() {
+//        return commandInvoker;
+//    }
+//}
+//
+//// Entity Package
+//package com.doremi.entity;
+//
+//import com.doremi.enums.Category;
+//import java.util.HashMap;
+//import java.util.Map;
+//
+//public class User {
+//    private String userId;
+//    private Map<Category, Subscription> subscriptions;
+//    private TopUp topUp;
+//
+//    public User(String userId) {
+//        this.userId = userId;
+//        this.subscriptions = new HashMap<>();
+//        this.topUp = null;
+//    }
+//
+//    public String getUserId() {
+//        return userId;
+//    }
+//
+//    public Map<Category, Subscription> getSubscriptions() {
+//        return subscriptions;
+//    }
+//
+//    public TopUp getTopUp() {
+//        return topUp;
+//    }
+//
+//    public void setTopUp(TopUp topUp) {
+//        this.topUp = topUp;
+//    }
+//}
+//
+//class Subscription {
+//    private String planType;
+//    private Category category;
+//    private int duration;
+//
+//    public Subscription(String planType, Category category, int duration) {
+//        this.planType = planType;
+//        this.category = category;
+//        this.duration = duration;
+//    }
+//
+//    public String getPlanType() {
+//        return planType;
+//    }
+//
+//    public Category getCategory() {
+//        return category;
+//    }
+//
+//    public int getDuration() {
+//        return duration;
+//    }
+//}
+//
+//class TopUp {
+//    private String type;
+//    private int cost;
+//    private int duration;
+//
+//    public TopUp(String type, int cost, int duration) {
+//        this.type = type;
+//        this.cost = cost;
+//        this.duration = duration;
+//    }
+//
+//    public String getType() {
+//        return type;
+//    }
+//
+//    public int getCost() {
+//        return cost;
+//    }
+//
+//    public int getDuration() {
+//        return duration;
+//    }
+//}
+//
+//// Enums Package
+//package com.doremi.enums;
+//
+//public enum Category {
+//    MUSIC,
+//    VIDEO,
+//    PODCAST
+//}
+//
+//public enum PlanType {
+//    FREE,
+//    PERSONAL,
+//    PREMIUM
+//}
+//
+//// Exception Package
+//package com.doremi.exception;
+//
+//public class SubscriptionException extends RuntimeException {
+//    public SubscriptionException(String message) {
+//        super(message);
+//    }
+//}
+//
+//// Service Package
+//package com.doremi.service;
+//
+//import com.doremi.entity.User;
+//import com.doremi.entity.Subscription;
+//import com.doremi.entity.TopUp;
+//import com.doremi.enums.Category;
+//import com.doremi.enums.PlanType;
+//import com.doremi.exception.SubscriptionException;
+//
+//public class SubscriptionService {
+//
+//    public void subscribeUser(User user, PlanType planType, Category category) {
+//        if (user.getSubscriptions().containsKey(category)) {
+//            throw new SubscriptionException("Already subscribed to this category.");
+//        }
+//
+//        int duration = getDuration(planType);
+//        user.getSubscriptions().put(category, new Subscription(planType.name(), category, duration));
+//        System.out.println("Subscribed to " + category + " with " + planType + " plan.");
+//    }
+//
+//    public void addTopUp(User user, String topUpType) {
+//        if (user.getSubscriptions().isEmpty()) {
+//            throw new SubscriptionException("No subscriptions found. Add a subscription before adding a top-up.");
+//        }
+//
+//        int cost = topUpType.equalsIgnoreCase("FOUR_DEVICE") ? 50 : 100;
+//        user.setTopUp(new TopUp(topUpType, cost, 1));
+//        System.out.println("Top-up " + topUpType + " added.");
+//    }
+//
+//    public void notifyRenewal(User user) {
+//        user.getSubscriptions().forEach((category, subscription) -> 
+//            System.out.println("Renewal reminder for " + subscription.getCategory() + " plan. Expires in 10 days."));
+//
+//        if (user.getTopUp() != null) {
+//            System.out.println("Renewal reminder for top-up "

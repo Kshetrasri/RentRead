@@ -1,0 +1,43 @@
+package com.example.rentread.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDate;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "rents")
+public class Rent {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@ManyToOne
+	private User user;
+
+	@ManyToOne
+	private Book book;
+
+	@CreationTimestamp
+	private LocalDate rentalDate;
+
+	@UpdateTimestamp
+	private LocalDate returnDate;
+
+	@Override
+	public String toString() {
+		return "Rent [id=" + id + ", user=" + user + ", book=" + book + ", rentalDate=" + rentalDate + ", returnDate="
+				+ returnDate + "]";
+	}
+
+	
+
+}

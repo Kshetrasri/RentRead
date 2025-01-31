@@ -1,0 +1,33 @@
+package com.example.geektrust;
+
+import com.example.geektrust.bean.TopUpService;
+import com.example.geektrust.service.SubscriptionService;
+
+public class ApplicationSetup {
+    private static ApplicationSetup instance;
+    private SubscriptionService subscriptionService;
+    private CommandInvoker commandInvoker;
+
+    // Private constructor to prevent instantiation
+    private ApplicationSetup() {
+        this.subscriptionService = new SubscriptionService();
+        this.commandInvoker = new CommandInvoker();
+    }
+
+    // Public method to get the single instance (Singleton pattern)
+    public static ApplicationSetup getInstanceOfApplicationSetup() {
+        if (instance == null) {
+            instance = new ApplicationSetup();
+        }
+        return instance;
+    }
+
+    // Getters for SubscriptionService and CommandInvoker
+    public SubscriptionService getSubscriptionService() {
+        return subscriptionService;
+    }
+
+    public CommandInvoker getCommandInvoker() {
+        return commandInvoker;
+    }
+}

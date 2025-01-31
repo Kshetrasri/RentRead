@@ -1,0 +1,38 @@
+package com.geektrust.backend.dto;
+
+
+import com.geektrust.backend.constants.Constants;
+import com.geektrust.backend.enums.Category;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class ReminderRenewalDto {
+   
+    private final Category subscriptionCategory;
+    private final LocalDate renewalDate;
+
+   
+    public ReminderRenewalDto(LocalDate renewalDate, Category subscriptionCategory) {
+        this.renewalDate = renewalDate;
+        this.subscriptionCategory = subscriptionCategory;
+    }
+
+    
+    public Category getSubscriptionCategory() {
+        return subscriptionCategory;
+    }
+
+    public LocalDate getRenewalDate() {
+        return renewalDate;
+    }
+
+ 
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
+        return String.format("RENEWAL_REMINDER %s %s", 
+                subscriptionCategory, 
+                formatter.format(renewalDate));
+    }
+}

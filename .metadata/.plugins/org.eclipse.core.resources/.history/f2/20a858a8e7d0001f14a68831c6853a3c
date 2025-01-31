@@ -1,0 +1,28 @@
+package com.example.geektrust;
+
+
+
+
+
+import java.util.List;
+
+public class AddTopUpCommand implements Command {
+
+    private TopUpService topUpService;
+
+    public AddTopUpCommand(TopUpService topUpService) {
+        this.topUpService = topUpService;
+    }
+
+    @Override
+    public void execute(List<String> commandParts) {
+        try {
+            String topUpName = commandParts.get(1);
+            int months = Integer.parseInt(commandParts.get(2));
+            topUpService.addTopUp(topUpName, months);
+            System.out.println("Top-up added: " + topUpName);
+        } catch (SubscriptionNotFoundException e) {
+            System.out.println("Error: No subscriptions found to apply the top-up.");
+        }
+    }
+}

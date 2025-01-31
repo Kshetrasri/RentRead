@@ -1,0 +1,90 @@
+//package com.example.geektrust.service;
+//
+//
+//
+//
+//import java.time.LocalDate;
+//import java.time.format.DateTimeFormatter;
+//import java.util.HashMap;
+//import java.util.Map;
+//
+//
+//public class SubscriptionService {
+//    private LocalDate startDate;
+//    private Map<String, Subscription> subscriptions = new HashMap<>();
+//    private Map<String, TopUpService> topUps = new HashMap<>();
+//
+//    public void startSubscription(String date) throws InvalidDateException {
+//        try {
+//            this.startDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+//        } catch (Exception e) {
+//            throw new InvalidDateException("INVALID_DATE");
+//        }
+//    }
+//
+//    public void addSubscription(String category, String plan) throws SubscriptionException {
+//        if (subscriptions.containsKey(category)) {
+//            throw new SubscriptionException("DUPLICATE_CATEGORY");
+//        }
+//
+//        Subscription subscription;
+//        if ("MUSIC".equalsIgnoreCase(category)) {
+//            subscription = new MusicSubscription(category, plan, startDate, getPlanDuration(plan));
+//        } else if ("VIDEO".equalsIgnoreCase(category)) {
+//            subscription = new VideoSubscription(category, plan, startDate, getPlanDuration(plan));
+//        } else {
+//            throw new SubscriptionException("INVALID_CATEGORY");
+//        }
+//        
+//        subscriptions.put(category, subscription);
+//    }
+//
+//    public void addTopUp(String name, int months) throws TopUpException {
+//        if (topUps.containsKey(name)) {
+//            throw new TopUpException("DUPLICATE_TOPUP");
+//        }
+//
+//        TopUpService topUp;
+//        if ("FOUR_DEVICE".equalsIgnoreCase(name)) {
+//            topUp = new FourDeviceTopUp(months);
+//        } else if ("TEN_DEVICE".equalsIgnoreCase(name)) {
+//            topUp = new TenDeviceTopUp(months);
+//        } else {
+//            throw new TopUpException("INVALID_TOPUP");
+//        }
+//
+//        topUps.put(name, topUp);
+//    }
+//
+//    public String printRenewalDetails() {
+//        if (subscriptions.isEmpty()) {
+//            return "SUBSCRIPTIONS_NOT_FOUND";
+//        }
+//
+//        StringBuilder result = new StringBuilder();
+//        int totalCost = 0;
+//
+//        for (Subscription sub : subscriptions.values()) {
+//            result.append("RENEWAL_REMINDER ").append(sub.getCategory())
+//                  .append(" ").append(sub.getRenewalDate()).append("\n");
+//            totalCost += sub.getCost();
+//        }
+//
+//        for (TopUpService topUp : topUps.values()) {
+//            totalCost += topUp.getTotalCost();
+//        }
+//
+//        result.append("RENEWAL_AMOUNT ").append(totalCost);
+//        return result.toString();
+//    }
+//
+//    private int getPlanDuration(String plan) {
+//        switch (plan.toUpperCase()) {
+//            case "PERSONAL": return 1;
+//            case "PREMIUM": return 3;
+//            case "FREE": return 1;
+//            default: return 0;
+//        }
+//    }
+//}
+//

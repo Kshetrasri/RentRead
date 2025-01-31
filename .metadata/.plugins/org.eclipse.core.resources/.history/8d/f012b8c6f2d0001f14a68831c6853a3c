@@ -1,0 +1,20 @@
+package com.geektrust.backend.enums;
+
+public enum Plan {
+    FREE,       
+    PERSONAL, 
+    PREMIUM;   
+
+
+    // Static method to get Plan enum by name (case-insensitive)
+    public static Plan fromString(String planName) {
+        for (Plan plan : Plan.values()) {
+            if (plan.name().equalsIgnoreCase(planName)) {
+                return plan;
+            }
+        }
+        throw new IllegalArgumentException("No constant with text " + planName + " found");
+    }
+
+    // Static method to get Plan enum from display name
+}

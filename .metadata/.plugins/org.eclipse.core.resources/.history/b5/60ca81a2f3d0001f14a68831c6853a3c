@@ -1,0 +1,24 @@
+package com.geektrust.backend.entities;
+
+import java.time.LocalDate;
+
+import com.geektrust.backend.enums.Category;
+import com.geektrust.backend.enums.Plan;
+
+public abstract class Subscription {
+
+	 private LocalDate dateOfSubscription;
+	 
+	    private List<ActivePlan> activePlans;
+	   
+	    private TopUpType topUpType;
+	  
+	    private Integer topUpValidity;
+	    
+	  
+	    private Category category;
+	  
+	    private Plan plan;
+
+
+}

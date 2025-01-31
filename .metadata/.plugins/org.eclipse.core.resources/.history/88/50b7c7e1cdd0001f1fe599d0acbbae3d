@@ -1,0 +1,15 @@
+package com.example.geektrust.bean;
+
+package com.example.entity;
+
+public class FourDeviceTopUp extends TopUpService {
+
+    public FourDeviceTopUp(int months) {
+        super("FOUR_DEVICE", months);
+    }
+
+    @Override
+    public int getCostPerMonth() {
+        return 50; // Example cost per month for four-device top-up
+    }
+}

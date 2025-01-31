@@ -1,0 +1,54 @@
+package com.example.geektrust.service;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import com.example.geektrust.exception.SubscriptionNotFoundException;
+
+public class TopUpService {
+
+    private Set<String> appliedTopUps = new HashSet<>();
+    private SubscriptionService subscriptionService;
+
+    // Constructor to initialize subscription service
+    public TopUpService(SubscriptionService subscriptionService) {
+        this.subscriptionService = subscriptionService;
+    }
+
+    // Method to add top-up
+    public void addTopUp(String topUpName, int months) throws SubscriptionNotFoundException, DuplicateTopUpException {
+        // Check if user has subscriptions
+        if (!subscriptionService.hasActiveSubscriptions()) {
+            throw new SubscriptionNotFoundException("No subscriptions found to apply the top-up.");
+        }
+
+        // Check if the top-up is already applied
+        if (appliedTopUps.contains(topUpName)) {
+            throw new DuplicateTopUpException("Top-up already exists: " + topUpName);
+        }
+
+        // Apply top-up and add to appliedTopUps set
+        appliedTopUps.add(topUpName);
+        System.out.println("Top-up applied: " + topUpName + " for " + months + " months.");
+
+        // Optionally, handle the logic to charge for the top-up
+        // This can be added to your billing logic if needed
+        // For example: chargeForTopUp(topUpName, months);
+    }
+
+    // Optionally, we could implement a method to charge the user for the top-up, if needed
+    // private void chargeForTopUp(String topUpName, int months) {
+    //     // Handle billing logic for top-up based on months and topUpName
+    // }
+
+    // Method to get applied top-ups
+    public Set<String> getAppliedTopUps() {
+        return appliedTopUps;
+    }
+
+    // Method to reset the top-up service (if needed)
+    public void resetTopUpService() {
+        appliedTopUps.clear();
+    }
+}
+

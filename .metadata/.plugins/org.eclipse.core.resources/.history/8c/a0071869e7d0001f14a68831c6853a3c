@@ -1,0 +1,34 @@
+package com.example.geektrust;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+    	 ApplicationSetup applicationSetup = ApplicationSetup.getInstanceOfApplicationSetup();
+         CommandInvoker commandInvoker = applicationSetup.getCommandInvoker();
+
+         // Initialize users
+         User user1 = new User("user123", "John Doe");
+         applicationSetup.getSubscriptionService().addUser(user1);
+
+         try (FileInputStream fis = new FileInputStream(args[0]);
+              Scanner sc = new Scanner(fis)) {
+
+             while (sc.hasNextLine()) {
+                 String command = sc.nextLine();
+                 List<String> commandParts = Arrays.asList(command.split(" "));
+                 commandInvoker.executeCommand(commandParts.get(0), commandParts);
+             }
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+     }
+    }
+
+
+
+

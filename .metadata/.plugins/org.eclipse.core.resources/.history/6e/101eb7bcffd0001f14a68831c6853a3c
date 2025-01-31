@@ -1,0 +1,14 @@
+package com.geektrust.backend.services;
+
+import com.geektrust.backend.enums.Category;
+import com.geektrust.backend.enums.Plan;
+import com.geektrust.backend.enums.DeviceCategory;
+import com.geektrust.backend.exceptions.SubscriptionFailedException;
+import com.geektrust.backend.exceptions.TopUpFailedException;
+import com.geektrust.backend.exceptions.DateInvalidException;
+
+public interface IAddSubscriptionService {
+    void startSubscription(String date) throws DateInvalidException;
+    void addSubscription(Category subCategory, Plan subPlan)throws SubscriptionFailedException;
+    void addTopUpPlan(Integer deviceType, Integer day)throws TopUpFailedException;
+}

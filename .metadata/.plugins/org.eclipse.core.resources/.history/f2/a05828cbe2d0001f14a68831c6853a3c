@@ -1,0 +1,29 @@
+package com.example.geektrust;
+
+
+
+import java.util.Map;
+
+public class SubscribeCommand implements Command {
+    private final Map<String, User> users;
+    private final SubscriptionService subscriptionService;
+
+    public SubscribeCommand(Map<String, User> users, SubscriptionService subscriptionService) {
+        this.users = users;
+        this.subscriptionService = subscriptionService;
+    }
+
+    @Override
+    public void execute(List<String> commandParts) {
+        if (commandParts.size() < 4) {
+            throw new IllegalArgumentException("Invalid SUBSCRIBE command format.");
+        }
+
+        String userId = commandParts.get(1);
+        Category category = Category.valueOf(commandParts.get(2).toUpperCase());
+        PlanType planType = PlanType.valueOf(commandParts.get(3).toUpperCase());
+
+        User user = users.computeIfAbsent(userId, User::new);
+        subscriptionService.subscribeUser(user, planType, category);
+    }
+}

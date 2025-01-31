@@ -1,0 +1,52 @@
+package com.example.learning_navigator.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.learning_navigator.entity.Student;
+import com.example.learning_navigator.repository.StudentRepository;
+
+@Service
+public class StudentService {
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+  
+    public Student createStudent(Student student) {
+        return studentRepository.save(student);
+    }
+
+    @Override
+    public Student getStudentById(Long id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with ID: " + id));
+    }
+
+    @Override
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+
+    @Override
+    public Student enrollInSubject(Long studentId, Long subjectId) {
+        Student student = getStudentById(studentId);
+        Subject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() -> new ResourceNotFoundException("Subject not found with ID: " + subjectId));
+
+        student.getSubjects().add(subject);
+        subject.getStudents().add(student);
+
+        subjectRepository.save(subject); // Save to update both sides of the relationship
+        return studentRepository.save(student);
+    }
+
+    @Override
+    public List<Subject> getEnrolledSubjects(Long studentId) {
+        Student student = getStudentById(studentId);
+        return student.getSubjects();
+    }
+}
+
+}
+

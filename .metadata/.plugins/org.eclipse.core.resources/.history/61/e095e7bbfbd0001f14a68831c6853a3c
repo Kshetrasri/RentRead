@@ -1,0 +1,17 @@
+package com.geektrust.backend.exceptions;
+
+import com.geektrust.backend.enums.Status;
+
+
+public class TopUpFactoryException {
+	
+	 public static void getTopUpException(Status  stauts) {
+	        switch (stauts) {
+	            case Status.NOT_STARTED:throw new TopUpFailedException("ADD_TOPUP_FAILED INVALID_DATE");
+	            case Status.STARTED: throw new TopUpFailedException("ADD_TOPUP_FAILED SUBSCRIPTIONS_NOT_FOUND");
+	            case Status.ADDED : throw new TopUpFailedException("ADD_TOPUP_FAILED DUPLICATE_TOPUP");
+	            default: return ;
+	        }
+	    }
+
+}

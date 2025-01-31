@@ -1,0 +1,67 @@
+package com.example.geektrust;
+
+
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Scanner;
+
+import com.example.geektrust.service.SubscriptionService;
+
+public class Main {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Please provide the input file path as a command line argument.");
+            return;
+        }
+
+        try {
+            // Open file and scan commands
+            FileInputStream fis = new FileInputStream(args[0]);
+            Scanner sc = new Scanner(fis);
+
+            SubscriptionService subscriptionService = new SubscriptionService();
+            CommandInvoker commandInvoker = new CommandInvoker();
+
+            while (sc.hasNextLine()) {
+                String commandLine = sc.nextLine().trim();
+                if (commandLine.isEmpty()) continue;
+
+                String[] commandParts = commandLine.split(" ");
+                String commandType = commandParts[0];
+
+                try {
+                    switch (commandType) {
+                        case "START_SUBSCRIPTION":
+                            commandInvoker.addCommand(commandType, new StartSubscriptionCommand(subscriptionService, commandParts[1]));
+                            break;
+
+                        case "ADD_SUBSCRIPTION":
+                            commandInvoker.addCommand(commandType, new CreateSubscriptionCommand(subscriptionService, commandParts[1], commandParts[2], commandParts[3]));
+                            break;
+
+                        case "ADD_TOPUP":
+                            commandInvoker.addCommand(commandType, new AddTopUpCommand(subscriptionService, commandParts[1], Integer.parseInt(commandParts[2])));
+                            break;
+
+                        case "PRINT_RENEWAL_DETAILS":
+                            commandInvoker.addCommand(commandType, new PrintRenewalDetailsCommand(subscriptionService));
+                            break;
+
+                        default:
+                            System.out.println("Unknown command: " + commandType);
+                            continue;
+                    }
+
+                    commandInvoker.executeCommand(commandType);
+                } catch (Exception e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
+
+            sc.close();
+        } catch (IOException e) {
+            System.out.println("Error reading the file: " + e.getMessage());
+        }
+    }
+}

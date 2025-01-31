@@ -1,0 +1,42 @@
+package com.doremi.service;
+
+
+public class SubscriptionService {
+
+    public void subscribeUser(User user, SubscriptionDTO subscriptionDTO) {
+        if (user.getSubscriptions().containsKey(subscriptionDTO.getCategory())) {
+            throw new SubscriptionException("Already subscribed to this category.");
+        }
+
+        int duration = getPlanDuration(subscriptionDTO.getPlanType());
+        user.getSubscriptions().put(subscriptionDTO.getCategory(),
+                new Subscription(subscriptionDTO.getPlanType(), subscriptionDTO.getCategory(), duration));
+        System.out.println("Subscribed to " + subscriptionDTO.getCategory() + " with " + subscriptionDTO.getPlanType() + " plan.");
+    }
+
+    public void addTopUp(User user, String topUpType) {
+        if (user.getSubscriptions().isEmpty()) {
+            throw new SubscriptionException("No subscriptions found. Add a subscription before adding a top-up.");
+        }
+
+        int cost = topUpType.equalsIgnoreCase("FOUR_DEVICE") ? 50 : 100;
+        user.setTopUp(new TopUp(topUpType, cost, 1));
+        System.out.println("Top-up " + topUpType + " added.");
+    }
+
+    public void notifyRenewal(User user) {
+        user.getSubscriptions().forEach((category, subscription) -> 
+            System.out.println("Renewal reminder for " + subscription.getCategory() + " plan. Expires in 10 days."));
+        if (user.getTopUp() != null) {
+            System.out.println("Renewal reminder for top-up " + user.getTopUp().getType() + ". Expires in 10 days.");
+        }
+    }
+
+    private int getPlanDuration(PlanType planType) {
+        return switch (planType) {
+            case FREE -> 1;
+            case PERSONAL -> 1;
+            case PREMIUM -> 3;
+        };
+    }
+}

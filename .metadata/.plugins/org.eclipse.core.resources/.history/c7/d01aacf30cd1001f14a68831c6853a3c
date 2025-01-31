@@ -1,0 +1,11 @@
+package com.geektrust.backend.exceptions;
+
+public class SubscriptionFactoryException {
+	
+	public static void getSubscriptionException(String str) {
+		switch(str) {
+		case "TRUE" : throw new SubscriptionFailedException("ADD_SUBSCRIPTION_FAILED DUPLICATE_CATEGORY");
+		}
+	}
+
+}

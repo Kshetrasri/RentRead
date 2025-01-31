@@ -1,0 +1,20 @@
+package com.example.geektrust;
+
+
+
+import java.util.List;
+
+public class PrintRenewalDetailsCommand implements Command {
+    private SubscriptionService subscriptionService;
+
+    public PrintRenewalDetailsCommand(SubscriptionService subscriptionService) {
+        this.subscriptionService = subscriptionService;
+    }
+
+    @Override
+    public void execute() {
+        subscriptionService.printRenewalDetails();
+    }
+}
+
+

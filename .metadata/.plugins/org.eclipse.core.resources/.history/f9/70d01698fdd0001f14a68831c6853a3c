@@ -1,0 +1,39 @@
+package com.geektrust.backend.config;
+
+import com.geektrust.backend.commands.*;
+import com.geektrust.backend.services.IAddRenewalService;
+import com.geektrust.backend.services.IAddSubscriptionService;
+import com.geektrust.backend.utils.DoReMiSubscription;
+import com.geektrust.backend.services.AddRenewalService;
+import com.geektrust.backend.services.AddSubscriptionService;
+
+
+public class ApplicationConfig {
+
+    private final CommandInvoker commandInvoker = new CommandInvoker();
+
+    private final DoReMiSubscription doReMiSubscription =new DoReMiSubscription();
+    private final IAddSubscriptionService addSubscriptionService=new AddSubscriptionService(doReMiSubscription);
+    private final IAddRenewalService addRenewalService=new AddRenewalService(doReMiSubscription);
+   
+   
+    private final AddSubscriptionCommand addStartSubscriptionCommand=new AddSubscriptionCommand(addSubscriptionService);
+    private final AddPlanInSubscriptionCommand addSubscriptionCommand=new AddPlanInSubscriptionCommand(addSubscriptionService);
+    private final AddTopUpCommand addTopUpCommand=new AddTopUpCommand(addSubscriptionService);
+    private final GetRenewalDetailsCommand getRenewalDetailsCommand=new GetRenewalDetailsCommand(addRenewalService);
+
+    public CommandInvoker getCommandInvoker(){
+        //to start subscription
+        commandInvoker.registerCommand("START_SUBSCRIPTION",addStartSubscriptionCommand);
+        
+        //add to pop up
+        commandInvoker.registerCommand("ADD_TOPUP",addTopUpCommand);
+        //print renewal details
+        commandInvoker.registerCommand("PRINT_RENEWAL_DETAILS",getRenewalDetailsCommand);
+
+
+        //add subscription
+        commandInvoker.registerCommand("ADD_SUBSCRIPTION",addSubscriptionCommand);
+        return commandInvoker;
+    }
+}

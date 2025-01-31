@@ -1,0 +1,24 @@
+package com.example.geektrust;
+
+
+
+
+
+public class AddTopUpCommand implements Command {
+    private SubscriptionService subscriptionService;
+    private String topUpType;
+    private int months;
+
+    public AddTopUpCommand(SubscriptionService subscriptionService, String topUpType, int months) {
+        this.subscriptionService = subscriptionService;
+        this.topUpType = topUpType;
+        this.months = months;
+    }
+
+    @Override
+    public void execute() {
+        subscriptionService.addTopUp(topUpType, months);
+    }
+}
+
+

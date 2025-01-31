@@ -1,0 +1,77 @@
+package com.geektrust.backend.services;
+
+import com.geektrust.backend.constants.Constants;
+import com.geektrust.backend.dto.AmountRenewalDto;
+import com.geektrust.backend.dto.ReminderRenewalDto;
+import com.geektrust.backend.dto.SubscriptionDto;
+import com.geektrust.backend.entities.Subscription;
+import com.geektrust.backend.enums.Category;
+import com.geektrust.backend.enums.Status;
+import com.geektrust.backend.enums.TopUpStatus;
+import com.geektrust.backend.exceptions.ExistingSubscriptionNotFoundException;
+import com.geektrust.backend.utils.DoReMiSubscription;
+import com.geektrust.backend.utils.UsedDevice;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class AddRenewalService implements IAddRenewalService{
+        private final SubscriptionDto programSubscription;
+    
+        public AddRenewalService(programSubscription doremiSubscription) {
+            this.programSubscription = doremiSubscription;
+        }
+    
+        @Override
+        public List<ReminderRenewalDto> calculateSubscriptions() throws ExistingSubscriptionNotFoundException {
+            // Check if subscription has started or not; throw exception if not found
+            if (programSubscription.getSubscriptionStatus().equals(Status.NOT_STARTED) || 
+            programSubscription.getSubscriptionStatus().equals(Status.STARTED)) {
+                throw new ExistingSubscriptionNotFoundException("SUBSCRIPTIONS_NOT_FOUND");
+            }
+    
+            List<ReminderRenewalDto> renewalReminderDtoList = new ArrayList<>();
+            Map<Category, Subscription> subscriptionMap = programSubscription.getSubscriptions();
+    
+            // Calculate renewal date for each subscription
+            for (Category subscriptionCategory : subscriptionMap.keySet()) {
+                LocalDate renewalDate = programSubscription.getSubscriptionStartDate()
+                        .plusMonths(subscriptionMap.get(subscriptionCategory).getValidityInMonths())
+                        .minusDays(Constants.BEFORE_NOTIFICATION_DAYS);
+                renewalReminderDtoList.add(new ReminderRenewalDto(renewalDate, subscriptionCategory));
+            }
+            return renewalReminderDtoList;
+        }
+    
+        @Override
+        public AmountRenewalDto calculateAmount() {
+        //     double amount = 0.0;
+        //     Map<Category, Subscription> subscriptionMap = programSubscription.getSubscriptions();
+    
+        //     // Add the subscription prices to the total amount
+        //     for (Subscription subscription : subscriptionMap.values()) {
+        //         amount += subscription.getPrice();
+        //     }
+    
+        //     // Check if top-up devices are added and include their price in the total amount
+        //     UsedDevice extraDevices = programSubscription.getSubscribedDevice();
+        //     if (programSubscription.getTopUpStatus().equals(TopUpStatus.ADDED) && extraDevices != null) {
+        //         amount += (extraDevices.getPrice() * programSubscription.getTopUpMonths());
+        //     }
+    
+        //     // Return the renewal amount wrapped in AmountRenewalDto
+        //     return new AmountRenewalDto((int) amount);
+        // }
+
+
+        double amount=0.0;
+        Map<Category,Subscription> subscriptionMap=programSubscription.getSubscriptions();
+        for(Subscription subscription: subscriptionMap.values()){
+            amount+=subscription.getPrice();
+        }
+        UsedDevice extraDevices = programSubscription.getSubscribedDevice();
+        if(programSubscription.getTopUpStatus().equals(TopUpStatus.ADDED) && extraDevices!=null) amount+=(extraDevices.getPrice()* programSubscription.getTopUpMonths());
+        return new AmountRenewalDto((int)amount);
+    }
+    }

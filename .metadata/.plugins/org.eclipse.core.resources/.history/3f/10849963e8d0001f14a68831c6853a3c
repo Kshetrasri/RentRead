@@ -1,0 +1,20 @@
+package com.example.geektrust;
+
+public class CreateSubscriptionCommand implements Command {
+    private SubscriptionService subscriptionService;
+    private String category;
+    private String plan;
+    private String startDate;
+
+    public CreateSubscriptionCommand(SubscriptionService subscriptionService, String category, String plan, String startDate) {
+        this.subscriptionService = subscriptionService;
+        this.category = category;
+        this.plan = plan;
+        this.startDate = startDate;
+    }
+
+    @Override
+    public void execute() {
+        subscriptionService.createSubscription(category, plan, startDate);
+    }
+}

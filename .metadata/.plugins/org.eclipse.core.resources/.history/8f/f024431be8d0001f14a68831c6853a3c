@@ -1,0 +1,20 @@
+package com.example.geektrust.entity;
+
+
+
+	public enum TopUpType {
+	    FOUR_DEVICE(50),
+	    TEN_DEVICE(100);
+
+	    private int cost;
+
+	    TopUpType(int cost) {
+	        this.cost = cost;
+	    }
+
+	    public int getCost() {
+	        return cost;
+	    }
+	}
+
+}

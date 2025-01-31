@@ -1,0 +1,24 @@
+package com.example.geektrust.dto;
+
+package com.doremi.dto;
+
+import com.doremi.enums.Category;
+import com.doremi.enums.PlanType;
+
+public class SubscriptionDTO {
+    private final PlanType planType;
+    private final Category category;
+
+    public SubscriptionDTO(PlanType planType, Category category) {
+        this.planType = planType;
+        this.category = category;
+    }
+
+    public PlanType getPlanType() {
+        return planType;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+}

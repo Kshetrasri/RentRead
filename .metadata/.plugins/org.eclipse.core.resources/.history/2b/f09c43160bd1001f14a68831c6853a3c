@@ -1,0 +1,68 @@
+package com.geektrust.backend.entities;
+
+import java.util.List;
+
+import com.geektrust.backend.enums.Category;
+import com.geektrust.backend.enums.Plan;
+import com.geektrust.backend.constants.*;
+
+public class ProSubscription {
+
+	private Category category;
+	private Plan plan;
+	
+	
+
+	public ProSubscription(Category category, Plan plan) {
+		this.category = category;
+		this.plan = plan;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Plan getPlan() {
+		return plan;
+	}
+
+	public void setPlan(Plan plan) {
+		this.plan = plan;
+	}
+	
+	
+	public Integer getValueForPlan() {
+        int totalAmount = 0;
+        if (this.category.equals(Category.MUSIC)) {
+            if (this.plan.equals(Plan.FREE)) {
+                totalAmount = FREE_PLAN_PRICE_PER_MONTH;
+            } else if (this.plan.equals(Plan.PERSONAL)) {
+                totalAmount = PERSONAL_MUSIC_PLAN_PRICE;
+            } else if (this.plan.equals(Plan.PREMIUM)) {
+                totalAmount = PREMIUM_MUSIC_PLAN_PRICE;
+            }
+        } else if (this.category.equals(Category.VIDEO)) {
+            if (this.plan.equals(Plan.FREE)) {
+                totalAmount = FREE_PLAN_PRICE_PER_MONTH;
+            } else if (this.plan.equals(Plan.PERSONAL)) {
+                totalAmount = PERSONAL_VIDEO_PLAN_PRICE;
+            } else if (this.plan.equals(Plan.PREMIUM)) {
+                totalAmount = PREMIUM_VIDEO_PLAN_PRICE;
+            }
+        } else if (this.category.equals(Category.PODCAST)) {
+            if (this.plan.equals(Plan.FREE)) {
+                totalAmount = FREE_PLAN_PRICE_PER_MONTH;
+            } else if (this.plan.equals(Plan.PERSONAL)) {
+                totalAmount = PERSONAL_PODCAST_PLAN_PRICE;
+            } else if (this.plan.equals(Plan.PREMIUM)) {
+                totalAmount = PREMIUM_PODCAST_PLAN_PRICE;
+            }
+        }
+        return totalAmount;
+    }
+
+}

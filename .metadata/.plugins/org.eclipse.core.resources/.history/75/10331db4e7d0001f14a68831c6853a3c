@@ -1,0 +1,21 @@
+package com.example.geektrust;
+
+
+import com.doremi.services.RenewalService;
+
+import java.util.List;
+
+public class PrintRenewalDetailsCommand implements Command {
+
+    private RenewalService renewalService;
+
+    public PrintRenewalDetailsCommand(RenewalService renewalService) {
+        this.renewalService = renewalService;
+    }
+
+    @Override
+    public void execute(List<String> commandParts) {
+        renewalService.printRenewalDetails();
+    }
+}
+

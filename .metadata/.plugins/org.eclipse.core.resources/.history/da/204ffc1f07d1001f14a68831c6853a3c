@@ -1,0 +1,63 @@
+package com.geektrust.backend.entities;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import com.geektrust.backend.enums.Category;
+import com.geektrust.backend.enums.DeviceCategory;
+import com.geektrust.backend.enums.Plan;
+
+public  class Subscription {
+
+	   private LocalDate dateOfSubscription;
+	   
+	    private DeviceCategory topUpType;
+	  
+	    private Integer topUpValidity;
+	   
+	  private List<ProSubscription> proSubcription;
+
+	    private int price;
+	    
+		public LocalDate getDateOfSubscription() {
+			return dateOfSubscription;
+		}
+
+		public void setDateOfSubscription(LocalDate dateOfSubscription) {
+			this.dateOfSubscription = dateOfSubscription;
+		}
+
+		public DeviceCategory getTopUpType() {
+			return topUpType;
+		}
+
+		public void setTopUpType(DeviceCategory topUpType) {
+			this.topUpType = topUpType;
+		}
+
+		public Integer getTopUpValidity() {
+			return topUpValidity;
+		}
+
+		public void setTopUpValidity(Integer topUpValidity) {
+			this.topUpValidity = topUpValidity;
+		}
+
+		public int getPrice() {
+			return price;
+		}
+
+		public List<ProSubscription> getProSubcription() {
+			return proSubcription;
+		}
+
+		public void setProSubcription(List<ProSubscription> proSubcription) {
+			this.proSubcription = proSubcription;
+		}
+
+		public void setPrice(int price) {
+			this.price = price;
+		} 
+		
+
+}

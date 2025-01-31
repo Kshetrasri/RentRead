@@ -1,0 +1,26 @@
+package com.example.geektrust.entity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class User {
+
+    private String userId;
+    private String userName;
+    private List<Subscription> subscriptions;
+
+    public User(String userId, String userName) {
+        this.userId = userId;
+        this.userName = userName;
+        this.subscriptions = new ArrayList<>();
+    }
+
+    public void addSubscription(Subscription subscription) {
+        subscriptions.add(subscription);
+    }
+
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+}
+

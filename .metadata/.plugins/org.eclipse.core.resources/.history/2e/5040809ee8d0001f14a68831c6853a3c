@@ -1,0 +1,37 @@
+package com.example.geektrust;
+
+
+public class ApplicationSetup {
+    private static ApplicationSetup instance;
+    private SubscriptionService subscriptionService;
+    private TopUpService topUpService;
+    private RenewalService renewalService;
+    private CommandInvoker commandInvoker;
+
+    private ApplicationSetup() {
+        subscriptionService = new SubscriptionService();
+        topUpService = new TopUpService();
+        renewalService = new RenewalService();
+        commandInvoker = new CommandInvoker();
+        
+        // Register Commands
+        commandInvoker.addCommand("ADD_SUBSCRIPTION", new AddSubscriptionCommand(subscriptionService));
+        commandInvoker.addCommand("ADD_TOPUP", new AddTopUpCommand(topUpService));
+        commandInvoker.addCommand("PRINT_RENEWAL_DETAILS", new PrintRenewalDetailsCommand(renewalService));
+    }
+
+    public static ApplicationSetup getInstanceOfApplicationSetup() {
+        if (instance == null) {
+            instance = new ApplicationSetup();
+        }
+        return instance;
+    }
+
+    public CommandInvoker getCommandInvoker() {
+        return commandInvoker;
+    }
+
+    public SubscriptionService getSubscriptionService() {
+        return subscriptionService;
+    }
+}

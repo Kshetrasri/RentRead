@@ -1,0 +1,22 @@
+package com.example.learning_navigator.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping
+public class ExamController {
+
+    @Autowired
+    private ExamService examService;
+
+    @PostMapping("/exams/{examId}")
+    public ResponseEntity<String> registerStudentForExam(@PathVariable Long examId, @RequestParam Long studentId) {
+        examService.registerStudentForExam(examId, studentId);
+        return ResponseEntity.ok("Student registered for exam successfully!");
+    }
+
+    // Other CRUD endpoints
+}

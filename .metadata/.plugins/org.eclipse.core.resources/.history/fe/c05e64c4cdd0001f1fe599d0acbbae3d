@@ -1,0 +1,18 @@
+package com.example.geektrust.bean;
+
+public abstract class TopUpService {
+    private String name;
+    private int months;
+
+    public TopUpService(String name, int months) {
+        this.name = name;
+        this.months = months;
+    }
+
+    // Abstract method to get cost for top-up
+    public abstract int getCostPerMonth();
+
+    public int getTotalCost() {
+        return getCostPerMonth() * months;
+    }
+}

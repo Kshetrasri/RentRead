@@ -1,0 +1,86 @@
+package com.geektrust.backend.utils;
+
+
+import com.geektrust.backend.entities.Subscription;
+import com.geektrust.backend.enums.Category;
+import com.geektrust.backend.enums.Status;
+import com.geektrust.backend.enums.TopUpStatus;
+
+import java.time.LocalDate;
+import java.util.Map;
+import java.util.TreeMap;
+
+public class DoReMiSubscription {
+    
+    private Status subscriptionStatus;
+    private Integer topUpMonths;
+    private LocalDate subscriptionStartDate;
+    private TopUpStatus topUpStatus;
+    private final Map<Category, Subscription> subscriptions;
+    private Integer  subscribedDevice;
+
+    // Constructor
+    public DoReMiSubscription() {
+        this.subscriptionStartDate = null;
+        this.subscriptions = new TreeMap<>();
+        this.subscriptionStatus = Status.NOT_STARTED;
+        this.topUpStatus = TopUpStatus.EMPTY;
+        this.topUpMonths = 0;
+        this.subscribedDevice = null;
+    }
+
+    // Method to add subscription start date
+    public void setSubscriptionStartDate(LocalDate startDate) {
+        this.subscriptionStartDate = startDate;
+        this.subscriptionStatus = Status.STARTED;
+    }
+
+    
+    public void addSubscription(Category category, Subscription subscription) {
+        if (category == null || subscription == null) {
+            throw new IllegalArgumentException("Subscription category and subscription cannot be null.");
+        }
+        this.subscriptionStatus = Status.ADDED;
+        subscriptions.put(category, subscription);
+    }
+
+    // Method to check if a subscription category exists
+    public boolean isSubscriptionCategoryExists(Category category) {
+        return subscriptions.containsKey(category);
+    }
+
+   
+    public void addTopUp(Integer device, Integer months) {
+        if (device == null || months == null || months <= 0) {
+            throw new IllegalArgumentException("Invalid device or months for top-up.");
+        }
+        this.topUpStatus = TopUpStatus.ADDED;
+        this.topUpMonths = months;
+        this.subscribedDevice = device;
+    }
+
+    // Getters
+    public LocalDate getSubscriptionStartDate() {
+        return subscriptionStartDate;
+    }
+
+    public Map<Category, Subscription> getSubscriptions() {
+        return new TreeMap<>(subscriptions); // Return a copy to preserve immutability
+    }
+
+    public Status getSubscriptionStatus() {
+        return subscriptionStatus;
+    }
+
+    public TopUpStatus getTopUpStatus() {
+        return topUpStatus;
+    }
+
+    public Integer getTopUpMonths() {
+        return topUpMonths;
+    }
+
+    public Integer getSubscribedDevice() {
+        return subscribedDevice;
+    }
+}

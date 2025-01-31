@@ -1,0 +1,33 @@
+package com.example.geektrust;
+
+
+import com.doremi.service.SubscriptionService;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ApplicationSetup {
+    private static ApplicationSetup instance;
+    private final CommandInvoker commandInvoker;
+
+    private ApplicationSetup() {
+        Map<String, User> users = new HashMap<>();
+        SubscriptionService subscriptionService = new SubscriptionService();
+        this.commandInvoker = new CommandInvoker(users, subscriptionService);
+    }
+
+    public static ApplicationSetup getInstanceOfApplicationSetup() {
+        if (instance == null) {
+            synchronized (ApplicationSetup.class) {
+                if (instance == null) {
+                    instance = new ApplicationSetup();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public CommandInvoker getCommandInvoker() {
+        return commandInvoker;
+    }
+}
